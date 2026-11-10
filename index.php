@@ -1,18 +1,21 @@
+
 <?php
-    
-    $username = "Tyrone";
-    $phone = "123-456-7890";
-    $address = "123 Main St, Anytown, USA";
+  include("header.html")  
+?>
 
-    // $username = strtoupper($username);
-    // $useraname = strtolower($username);
-    // $useraname = ucfirst($username);
-        // $useraname = trim($username);
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    This is the home page  <br>
+    Stuff about your hompage can go here <br>
+</body>
+</html>
 
-
-        $usename = implode(" <br> ", [$username, $phone, $address]);
-    echo "Hello, $username! Welcome to our website.";
-    echo "<br>";
-    echo "Your contact information: $usename";
-
+<?php
+  include("footer.html")  
 ?>
