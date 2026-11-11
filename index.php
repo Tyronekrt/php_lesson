@@ -1,6 +1,6 @@
+<?php   
+   session_start(); 
 
-<?php
-  include("header.html")  
 ?>
 
 <!DOCTYPE html>
@@ -11,11 +11,41 @@
     <title>Document</title>
 </head>
 <body>
-    This is the home page  <br>
-    Stuff about your hompage can go here <br>
+    <form action="index.php" method = "POST">
+        username: <br>
+        <input type="text" name="username"> <br>
+        password: <br>
+        <input type="password" name="password"> <br>
+        <input type="submit" name="login" value = "login">
+
+    </form>
 </body>
 </html>
 
 <?php
-  include("footer.html")  
+    // $_SESSION["username"] = "Tyrone";
+    // $_SESSION["password"] = "Ti123";
+
+    // echo $_SESSION["username"] . "<br>";
+    // echo $_SESSION["password"] . "<br>";
+
+
+    if(isset($_POST["login"])) {
+
+        if(!empty($_POST["username"]) && 
+            !empty($_POST["password"]))
+            {
+        $_SESSION["username"] = $_POST["username"];
+        $_SESSION["password"] = $_POST["password"];
+
+        echo $_SESSION["username"] . "<br>";
+        echo $_SESSION["password"] . "<br>";
+
+        header("Location: home.php");
+            }
+            else{
+                echo "Missing username/password <br>";
+            }
+    }
+
 ?>
