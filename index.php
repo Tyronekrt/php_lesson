@@ -1,8 +1,8 @@
-<?php   
-   session_start(); 
+<?php
+
+    include("database.php");
 
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -11,41 +11,40 @@
     <title>Document</title>
 </head>
 <body>
-    <form action="index.php" method = "POST">
+    <form action="<?php htmlspecialchars($_SERVER["PHP_SELF"]) ?>" method="post">
+        <h2>Welcome to Tiktok you tiktwecker</h2>
         username: <br>
-        <input type="text" name="username"> <br>
+        <input type="text" name= "username"> <br>
         password: <br>
-        <input type="password" name="password"> <br>
-        <input type="submit" name="login" value = "login">
+        <input type="password" name = "password"> <br>
+        <input type="submit" name = "submit" value="Register">
 
     </form>
 </body>
 </html>
+<?php 
+    if($_SERVER["REQUEST_METHOD"] == "POST") {
+        $username = filter_input(INPUT_POST, "username", FILTER_SANITIZE_SPECIAL_CHARS);
+        $password = filter_input(INPUT_POST, "password", FILTER_SANITIZE_SPECIAL_CHARS);
+        if(empty($username)) {
+            echo "Please enter the username";
+        }elseif(empty($password)){
+            echo "Please enter the password";
+        }
+        else{
+            $hash = password_hash($password, PASSWORD_DEFAULT);
+            $sql = "INSERT INTO users (user, password)
+            VALUES ('$username', '$hash')";
 
-<?php
-    // $_SESSION["username"] = "Tyrone";
-    // $_SESSION["password"] = "Ti123";
-
-    // echo $_SESSION["username"] . "<br>";
-    // echo $_SESSION["password"] . "<br>";
-
-
-    if(isset($_POST["login"])) {
-
-        if(!empty($_POST["username"]) && 
-            !empty($_POST["password"]))
-            {
-        $_SESSION["username"] = $_POST["username"];
-        $_SESSION["password"] = $_POST["password"];
-
-        echo $_SESSION["username"] . "<br>";
-        echo $_SESSION["password"] . "<br>";
-
-        header("Location: home.php");
+            try{
+                mysqli_query($conn, $sql);
+                echo "You are now registered";
             }
-            else{
-                echo "Missing username/password <br>";
+            catch(mysqli_sql_exception) {
+                echo "Useraname taken, try another one";
             }
+        }
     }
 
+    mysqli_close($conn);
 ?>
